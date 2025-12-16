@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4236ebaa-4a11-4453-9796-66fe6f222270" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/AI_Agent_Powered_Resume_Analyzer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/tasks.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/urls.py" afterDir="false" />
+    <list default="true" id="4236ebaa-4a11-4453-9796-66fe6f222270" name="Changes" comment="New updates and New initialization.">
+      <change afterPath="$PROJECT_DIR$/core/ai/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/ai/agent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/ai/parser.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/ai/vector_store.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/tasks.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,13 +67,14 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feat/ini",
+    "git-widget-placeholder": "phase-1",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -120,11 +122,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1765907502497</updated>
-      <workItem from="1765907503742" duration="2550000" />
+      <workItem from="1765907503742" duration="5703000" />
     </task>
+    <task id="LOCAL-00001" summary="New updates and New initialization.">
+      <option name="closed" value="true" />
+      <created>1765910382939</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1765910382939</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="New updates and New initialization." />
+    <option name="LAST_COMMIT_MESSAGE" value="New updates and New initialization." />
   </component>
 </project>
