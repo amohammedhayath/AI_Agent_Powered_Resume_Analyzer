@@ -3,8 +3,9 @@ import json
 from google.genai import Client
 from google.genai import types
 from django.conf import settings
+from dotenv import load_dotenv
 
-
+load_dotenv()
 class GeminiAgent:
     def __init__(self):
         self.api_key = os.getenv("GEMINI_API_KEY")
@@ -16,7 +17,7 @@ class GeminiAgent:
     def get_embedding(self, text):
         try:
             response = self.client.models.embed_content(
-                model='text-embedding-004',
+                model='models/text-embedding-004',
                 contents=text
             )
             return response.embeddings[0].values
@@ -35,7 +36,7 @@ class GeminiAgent:
         """
         try:
             response = self.client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='models/gemini-flash-latest',
                 contents=prompt.format(text=resume_text[:10000]),
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json"

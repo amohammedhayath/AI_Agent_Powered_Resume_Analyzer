@@ -1,0 +1,25 @@
+# --- Security (NEVER UPLOAD THESE) ---
+.env
+
+# --- Python Junk ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# --- Databases ---
+db.sqlite3
+chroma_db/
+
+# --- Uploaded Media ---
+resumes/
+media/
+
+# --- IDE Settings (Optional) ---
+.idea/
+.vscode/
+
+# --- Frontend Junk ---
+resume-ai-frontend/node_modules/
+resume-ai-frontend/build/
