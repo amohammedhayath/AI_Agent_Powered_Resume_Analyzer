@@ -103,15 +103,15 @@ npm start
 
 **1. The "Liquid Glass" Dashboard**
 *A modern, dark-themed upload interface using glassmorphism design.*
-![Dashboard UI](screenshots\main.png)
+![Dashboard UI](screenshots/main.png)
 
 **2. The Analysis Report**
 *Deep semantic analysis of the resume vs. the job description with a fitment score.*
-![Analysis Report](screenshots\accuracy.png)
+![Analysis Report](screenshots/accuracy.png)
 
 **3. The AI Optimizer**
 *Side-by-side comparison showing how the AI rewrites bullet points to match the JD.*
-![Optimization Cards](screenshots\enhancement.png)
+![Optimization Cards](screenshots/enhancement.png)
 
 ---
 
