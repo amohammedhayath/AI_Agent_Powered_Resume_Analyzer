@@ -4,7 +4,7 @@ import chromadb
 import google.generativeai as genai
 from celery import shared_task
 from django.conf import settings
-from .models import Resume, JobDescription, MatchResult
+from .models import Resume, JobDescription, MatchResult, OptimizationSuggestion
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -161,4 +161,77 @@ def analyze_job_match_task(job_id, resume_id):
 
     except Exception as e:
         print(f"Analysis Failed: {str(e)}")
+        return f"Failed: {str(e)}"
+
+# --- TASK 3: GENERATE OPTIMIZATION SUGGESTIONS ---
+@shared_task
+def generate_optimization_task(match_id):
+    try:
+        print(f"Starting Optimization for Match ID: {match_id}")
+        match = MatchResult.objects.get(id=match_id)
+        job = match.job_description
+        resume = match.resume
+
+        # 1. Construct the Context-Aware Prompt
+        # We give the AI the specific chunks relevant to the job, not the whole resume (to save tokens/focus)
+        resume_context = "\n".join(match.relevant_chunks)
+
+        prompt = f"""
+        Act as an Expert Technical Resume Writer. Your goal is "Semantic Alignment."
+        
+        CONTEXT:
+        A candidate applied for a job but used generic terms. You must rewrite their bullet points to use the specific professional terminology found in the Job Description, without inventing new skills.
+
+        JOB DESCRIPTION:
+        {job.description}
+
+        CANDIDATE'S CURRENT RESUME SNIPPETS:
+        {resume_context}
+
+        TASK:
+        Identify 3 specific bullet points or sentences from the Candidate's snippets that can be improved.
+        For each, rewrite it to adopt the specific vocabulary/keywords from the Job Description.
+        
+        RULES:
+        1. Do NOT invent skills the candidate didn't mention.
+        2. Keep the rewritten version concise and professional.
+        3. Explain strictly WHY you changed it (e.g., "Mapped generic 'database' to specific 'PostgreSQL' from JD").
+
+        OUTPUT FORMAT (Strict JSON List):
+        [
+            {{
+                "original_text": "text from resume",
+                "optimized_text": "rewritten text with JD keywords",
+                "reason": "explanation",
+                "category": "Terminology"
+            }}
+        ]
+        """
+
+        # 2. Call Gemini
+        model = genai.GenerativeModel('gemini-flash-latest')
+        response = model.generate_content(prompt)
+
+        # 3. Clean JSON
+        json_text = response.text.strip().replace('```json', '').replace('```', '')
+        suggestions = json.loads(json_text)
+
+        # 4. Save to Database
+        # Clear old suggestions for this match first (optional)
+        OptimizationSuggestion.objects.filter(match_result=match).delete()
+
+        for item in suggestions:
+            OptimizationSuggestion.objects.create(
+                match_result=match,
+                original_text=item.get('original_text'),
+                optimized_text=item.get('optimized_text'),
+                reason=item.get('reason'),
+                category=item.get('category', 'Terminology')
+            )
+        
+        print(f"Optimization Complete. Saved {len(suggestions)} suggestions.")
+        return "Optimization Succeeded"
+
+    except Exception as e:
+        print(f"Optimization Failed: {str(e)}")
         return f"Failed: {str(e)}"
