@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Resume, JobDescription, MatchResult
+from .models import Resume, JobDescription, MatchResult, OptimizationSuggestion
 
 # --- Utility Serializer ---
 class SimpleResumeSerializer(serializers.ModelSerializer):
@@ -47,3 +47,8 @@ class MatchResultSerializer(serializers.ModelSerializer):
             'id', 'fitment_score', 'justification', 'relevant_chunks',
             'resume', 'job_description_title'
         )
+
+class OptimizationSuggestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OptimizationSuggestion
+        fields = ['id', 'original_text', 'optimized_text', 'reason', 'category']

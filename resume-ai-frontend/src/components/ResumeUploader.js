@@ -3,83 +3,50 @@ import axios from 'axios';
 
 const ResumeUploader = ({ onUploadSuccess }) => {
     const [file, setFile] = useState(null);
-    const [status, setStatus] = useState('');
-    const [message, setMessage] = useState('');
     const [uploading, setUploading] = useState(false);
-
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-        setStatus('');
-        setMessage('');
-    };
+    const [message, setMessage] = useState('');
 
     const handleUpload = async () => {
-        if (!file) {
-            alert("Please select a file first!");
-            return;
-        }
-
+        if (!file) return;
+        setUploading(true);
         const formData = new FormData();
         formData.append('file', file);
 
-        setUploading(true);
-        setStatus('info');
-        setMessage('Uploading...');
-
         try {
-            // 1. Send File to Django
-            const response = await axios.post('http://127.0.0.1:8000/api/resumes/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-            setStatus('success');
-            setMessage(`Upload Successful! ID: ${response.data.id}`);
-
-            // Pass the Resume ID up to the parent component (App.js)
-            if(onUploadSuccess) {
-                onUploadSuccess(response.data.id);
-            }
-
+            const response = await axios.post('http://127.0.0.1:8000/api/resumes/upload/', formData);
+            setMessage(`✅ Upload Successful! ID: ${response.data.id}`);
+            onUploadSuccess(response.data.id);
         } catch (error) {
-            console.error(error);
-            setStatus('danger');
-            setMessage('Upload failed. Check console for details.');
+            setMessage('❌ Upload Failed');
         } finally {
             setUploading(false);
         }
     };
 
     return (
-        <div className="card shadow-sm mb-4">
-            <div className="card-header bg-primary text-white">
-                <h5 className="mb-0">Step 1: Upload Resume</h5>
-            </div>
-            <div className="card-body">
-                <div className="mb-3">
-                    <input
-                        type="file"
-                        className="form-control"
-                        accept=".pdf"
-                        onChange={handleFileChange}
-                    />
+        <div>
+            <div className="d-flex align-items-center mb-4">
+                 <div className="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style={{width: 40, height: 40}}>
+                    <span className="text-white fw-bold">1</span>
                 </div>
+                <h4 className="mb-0">Upload Resume</h4>
+            </div>
 
-                <button
-                    className="btn btn-primary w-100"
-                    onClick={handleUpload}
+            <div className="d-flex gap-3">
+                <input 
+                    type="file" 
+                    className="form-control" 
+                    onChange={(e) => setFile(e.target.files[0])}
+                />
+                <button 
+                    className="btn btn-primary-glass" 
+                    onClick={handleUpload} 
                     disabled={uploading}
                 >
-                    {uploading ? 'Uploading...' : 'Upload Resume'}
+                    {uploading ? 'Uploading...' : 'Upload'}
                 </button>
-
-                {message && (
-                    <div className={`alert alert-${status} mt-3`}>
-                        {message}
-                    </div>
-                )}
             </div>
+            {message && <div className="mt-3 text-success fw-bold">{message}</div>}
         </div>
     );
 };

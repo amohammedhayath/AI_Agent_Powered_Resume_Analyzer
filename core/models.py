@@ -52,3 +52,14 @@ class MatchResult(models.Model):
 
     def __str__(self):
         return f"Match: {self.resume.candidate_name} -> {self.job_description.title}"
+    
+
+class OptimizationSuggestion(models.Model):
+    match_result = models.ForeignKey(MatchResult, on_delete=models.CASCADE, related_name='suggestions')
+    original_text = models.TextField(help_text="The exact text from the resume")
+    optimized_text = models.TextField(help_text="The AI rewritten version")
+    reason = models.TextField(help_text="Why this change was made (e.g. 'Aligned with JD terminology')")
+    category = models.CharField(max_length=50, default="Terminology") # e.g. "Terminology", "Impact", "Clarity"
+
+    def __str__(self):
+        return f"Suggestion for Match {self.match_result.id}"

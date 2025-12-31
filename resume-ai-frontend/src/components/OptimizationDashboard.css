@@ -1,0 +1,85 @@
+/* src/components/OptimizationDashboard.css */
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.85); /* Slightly more opaque for readability */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    margin-bottom: 25px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-panel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+}
+
+.diff-grid {
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr; /* Left - Arrow - Right */
+    gap: 20px;
+    align-items: stretch;
+}
+
+@media (max-width: 768px) {
+    .diff-grid {
+        grid-template-columns: 1fr; /* Stack vertically on mobile */
+    }
+    .arrow-container {
+        transform: rotate(90deg); /* Point down on mobile */
+        margin: 10px 0;
+    }
+}
+
+.original-box {
+    background: #fff5f5; /* Light Red tint */
+    border-left: 4px solid #ff5252;
+    padding: 15px;
+    border-radius: 8px;
+    color: #4a4a4a;
+    font-size: 0.95rem;
+    height: 100%;
+}
+
+.optimized-box {
+    background: #e8f5e9; /* Light Green tint */
+    border-left: 4px solid #4caf50;
+    padding: 15px;
+    border-radius: 8px;
+    color: #1b5e20;
+    font-weight: 500;
+    font-size: 0.95rem;
+    height: 100%;
+}
+
+.arrow-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: #b0bec5;
+}
+
+.category-badge {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.reason-text {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    font-size: 0.85rem;
+    color: #607d8b;
+    font-style: italic;
+}
